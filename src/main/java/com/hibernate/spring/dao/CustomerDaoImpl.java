@@ -18,6 +18,7 @@ public class CustomerDaoImpl implements CustomerDao {
   public List<Customer> getCustomers() {
     Session session = sessionFactory.getCurrentSession();
     Query<Customer> query = session.createQuery("from Customer", Customer.class);
-    return query.getResultList();
+    List<Customer> customers = query.getResultList();
+    return customers;
   }
 }

@@ -18,8 +18,8 @@ public class CustomerController {
   @GetMapping("/")
   public String customerHomePage(Model model) {
     List<Customer> customers = customerDao.getCustomers();
-    System.out.println(customers);
     model.addAttribute("customers", customers);
+    System.out.println(customers);
     return "list-customers";
   }
 }
