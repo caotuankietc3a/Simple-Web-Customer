@@ -13,12 +13,27 @@ import org.springframework.transaction.annotation.Transactional;
 public class CustomerDaoImpl implements CustomerDao {
   @Autowired private SessionFactory sessionFactory;
 
-  @Transactional
   @Override
+  @Transactional
   public List<Customer> getCustomers() {
     Session session = sessionFactory.getCurrentSession();
     Query<Customer> query = session.createQuery("from Customer", Customer.class);
     List<Customer> customers = query.getResultList();
     return customers;
+  }
+
+  @Override
+  @Transactional
+  public void saveCustomer(Customer customer) {
+    Session session = sessionFactory.getCurrentSession();
+    session.save(customer);
+  }
+
+  @Override
+  @Transactional
+  public void deleteCustomer(int customerId) {
+    Session session = sessionFactory.getCurrentSession();
+    Customer customer = session.get(Customer.class, customerId);
+    session.delete(customer);
   }
 }

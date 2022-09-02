@@ -7,12 +7,13 @@ GRANT
     ALL PRIVILEGES ON *.* TO 'student-spring-hibernate' @'localhost';
 
 CREATE DATABASE IF NOT EXISTS web_customer_tracker;
+DROP TABLE Customer;
 
 CREATE TABLE
     Customer (
         id INT(11) AUTO_INCREMENT NOT NULL,
         name VARCHAR(45) DEFAULT NULL,
-        email VARCHAR(45) DEFAULT null,
+        email VARCHAR(45) UNIQUE DEFAULT NULL,
         PRIMARY KEY (id)
     );
 INSERT INTO `Customer`(name,email) VALUES('CTK','caotuankietc3a@gmail.com');

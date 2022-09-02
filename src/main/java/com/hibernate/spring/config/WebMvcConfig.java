@@ -15,14 +15,14 @@ import org.springframework.web.servlet.view.JstlView;
 /** WebMvcConfig */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"com.hibernate.spring"})
+@ComponentScan(basePackages = "com.hibernate.spring")
 public class WebMvcConfig implements WebMvcConfigurer {
   @Bean(name = "viewResolver")
   public InternalResourceViewResolver viewResolver() {
     InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-    resolver.setViewClass(JstlView.class);
     resolver.setPrefix("/WEB-INF/view/");
     resolver.setSuffix(".jsp");
+    resolver.setViewClass(JstlView.class);
     return resolver;
   }
 
@@ -30,7 +30,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
   @Bean
   public MessageSource messageSource() {
     ResourceBundleMessageSource source = new ResourceBundleMessageSource();
-    source.setBasename("resources/messages");
+    source.setBasename("messages");
     return source;
   }
 }
