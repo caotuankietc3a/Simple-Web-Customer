@@ -20,6 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class CustomerController {
   @Autowired private CustomerDao customerDao;
 
+  @GetMapping("/")
+  public String homePage() {
+    return "redirect:/customer-list";
+  }
+
   @GetMapping("/customer-list")
   public String customerList(Model model) {
     List<Customer> customers = customerDao.getCustomers();
@@ -30,14 +35,18 @@ public class CustomerController {
   @GetMapping("/customer-form")
   public String customerForm(Model model) {
     model.addAttribute("customer", new Customer());
+    model.addAttribute("actionPost", new String("/web-app-demo/save-customer"));
+    model.addAttribute("inputVal", new String("Add Customer"));
     return "form-customer";
   }
 
   @PostMapping("/save-customer")
   public String saveCustomer(
-      @Valid @ModelAttribute("customer") Customer customer, BindingResult bindingResult) {
+      @Valid @ModelAttribute("customer") Customer customer,
+      BindingResult bindingResult,
+      Model model) {
     if (bindingResult.hasErrors()) {
-      System.out.println(bindingResult);
+      model.addAttribute("inputVal", new String("Add Customer"));
       return "form-customer";
     }
     customerDao.saveCustomer(customer);
@@ -47,6 +56,27 @@ public class CustomerController {
   @GetMapping("/delete-customer")
   public String deleteCustomer(@RequestParam("customerId") int customerId) {
     customerDao.deleteCustomer(customerId);
+    return "redirect:/customer-list";
+  }
+
+  @GetMapping("/update-customer")
+  public String updateCustomer(@RequestParam("customerId") int customerId, Model model) {
+    Customer customer = customerDao.findCustomer(customerId);
+    model.addAttribute("customer", customer);
+    model.addAttribute("actionPost", new String("/web-app-demo/update-customer-process"));
+    model.addAttribute("inputVal", new String("Update Customer"));
+    return "form-customer";
+  }
+
+  @PostMapping("/update-customer-process")
+  public String updateCustomerProcess(
+      @Valid @ModelAttribute("customer") Customer customer,
+      BindingResult bindingResult,
+      Model model) {
+    if (bindingResult.hasErrors()) {
+      return "form-customer";
+    }
+    customerDao.updateCustomer(customer);
     return "redirect:/customer-list";
   }
 }
