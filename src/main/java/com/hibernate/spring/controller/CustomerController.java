@@ -5,10 +5,13 @@ import com.hibernate.spring.model.Customer;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +22,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping(path = "/")
 public class CustomerController {
   @Autowired private CustomerDao customerDao;
+  // This method will pre-process each web request to controller.
+  @InitBinder
+  public void initBinder(WebDataBinder webDataBinder) {
+    StringTrimmerEditor stringTrimmerEditor =
+        new StringTrimmerEditor(true); // true means trim data to null if it has white space
+    webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+  }
 
   @GetMapping("/")
   public String homePage() {
