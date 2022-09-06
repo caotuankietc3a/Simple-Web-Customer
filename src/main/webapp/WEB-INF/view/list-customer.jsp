@@ -55,7 +55,7 @@
 						</tbody>
 					</table>
 					<div>
-						<a href="<c:url value=" /customer-form" />"><input class="btn btn-primary btn-block mt-2"
+						<a href="<c:url value="/customer-form" />"><input class="btn btn-primary btn-block mt-2"
 							value="Add Customer"></input></a>
 					</div>
 				</div>
