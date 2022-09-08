@@ -7,33 +7,31 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-/** Customer */
-@Entity(name = "Customer")
-@Table(name = "Customer")
-public class Customer {
+/** User */
+@Entity
+@Table(name = "User")
+public class User {
   @Id
   @Column(name = "id", nullable = false, length = 11, unique = true)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
   @NotNull
-  @Size(min = 5, max = 200, message = "Name must be between 5 and 200 characters long")
-  @Column(name = "name", unique = false, nullable = false, length = 45)
+  @Size(max = 45, min = 5, message = "Please enter a name with 5 minimum chars and max 45 chars")
+  @Column(name = "name", unique = true, nullable = false, length = 45)
   private String name;
 
   @NotNull
-  @Pattern(regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
-  @Column(name = "email", unique = true, nullable = false, length = 45)
-  private String email;
+  @Column(name = "password", unique = false, nullable = false, length = 64)
+  private String password;
 
-  public Customer() {}
+  public User() {}
 
-  public Customer(String name, String email) {
+  public User(String name, String password) {
     this.name = name;
-    this.email = email;
+    this.password = password;
   }
 
   public int getId() {
@@ -52,16 +50,11 @@ public class Customer {
     this.name = name;
   }
 
-  public String getEmail() {
-    return this.email;
+  public String getPassword() {
+    return this.password;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  @Override
-  public String toString() {
-    return this.id + ": " + this.name + ", " + this.email;
+  public void setPassword(String password) {
+    this.password = password;
   }
 }

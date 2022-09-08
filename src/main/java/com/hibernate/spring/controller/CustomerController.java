@@ -35,6 +35,12 @@ public class CustomerController {
     return "redirect:/customer-list";
   }
 
+  @GetMapping("/admin")
+  public String adminPage() {
+    return "admin";
+  }
+
+  // @GetMapping({"/customer-list", "/"})
   @GetMapping("/customer-list")
   public String customerList(Model model) {
     List<Customer> customers = customerDao.getCustomers();
