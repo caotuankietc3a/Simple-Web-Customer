@@ -22,12 +22,6 @@
 							<i class="fas fa-book-open text-primary"></i> Customer<span
 								class="text-primary">Management</span>System
 						</h1>
-						<div class="card text-white bg-secondary mb-3" style="max-width: 100%;">
-							<div class="card-body">
-								<h3 class="card-title text-center text-info">Welcome</h3>
-								<p class="card-text text-center">Webpage displays all customers.</p>
-							</div>
-						</div>
 						<form:form method="POST" action="${actionPost}" modelAttribute="customer">
 							<div class="form-group">
 								<form:label for="name" path="name">Name</form:label>

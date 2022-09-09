@@ -1,6 +1,7 @@
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
 	<%@page isELIgnored="false" %>
 		<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+      <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 			<!DOCTYPE html>
 			<html lang="en">
 
@@ -22,6 +23,14 @@
 					<h1 class="display-4 text-center">
 						<i class="fas fa-book-open text-primary"></i> My<span class="text-primary">Customer</span>List
 					</h1>
+          <div class="card text-white bg-secondary mb-3" style="max-width: 100%;">
+            <div class="card-body">
+              <h3 class="card-title text-center text-info">Welcome: ${username}</h3>
+              <p class="card-text text-center">Webpage displays all customers.</p>
+              <p class="card-text text-center">If you want to logout, please click <a href="<c:url value='/logout'/>" class="text-warning">here</a>!</p>
+  
+            </div>
+          </div>
 					<table class="table table-striped mt-5">
 						<thead>
 							<tr class="text-center">
