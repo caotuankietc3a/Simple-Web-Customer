@@ -27,6 +27,9 @@ public class User {
   @Column(name = "password", unique = false, nullable = false, length = 64)
   private String password;
 
+  private boolean active;
+  private String roles;
+
   public User() {}
 
   public User(String name, String password) {
@@ -56,5 +59,21 @@ public class User {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public boolean isActive() {
+    return this.active;
+  }
+
+  public void setActive(boolean active) {
+    this.active = active;
+  }
+
+  public String getRoles() {
+    return this.roles;
+  }
+
+  public void setRoles(String roles) {
+    this.roles = roles;
   }
 }

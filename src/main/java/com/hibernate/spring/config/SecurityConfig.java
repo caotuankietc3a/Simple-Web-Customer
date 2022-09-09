@@ -15,69 +15,44 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+  @Autowired
+  private UserDetailsService userDetailsService;
   //////////////////////// Old Version /////////////////////
-
-  @Autowired UserDetailsService userDetailsService;
-
   // @Override
   // protected void configure(HttpSecurity http) throws Exception {
-  //   http.authorizeRequests()
-  //       .antMatchers("/admin")
-  //       .hasRole("ADMIN")
-  //       .antMatchers("/**")
-  //       .hasRole("USER")
-  //       .and()
-  //       .formLogin();
+  // http.authorizeRequests()
+  // .antMatchers("/admin")
+  // .hasRole("ADMIN")
+  // .antMatchers("/**")
+  // .hasRole("USER")
+  // .and()
+  // .formLogin();
   // }
 
   // @Override
-  // protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-  //   auth.userDetailsService(this.userDetailsService);
+  // protected void configure(AuthenticationManagerBuilder auth) throws Exception
+  // {
+  // auth.userDetailsService(this.userDetailsService);
   // }
 
   // Need PasswordEncoder otherwise throw IllegalArgumentException error
   @Bean
   public PasswordEncoder getPasswordEncoder() {
     return NoOpPasswordEncoder.getInstance();
+    // return new BCryptPasswordEncoder();
   }
-
-  // @Bean
-  // public InMemoryUserDetailsManager userDetailsManager() {
-  //
-  // }
 
   /////////// New Version ////////////////
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests()
-        .antMatchers("/**")
-        .hasRole("USER")
         .antMatchers("/admin/**")
         .hasRole("ADMIN")
+        .antMatchers("/**")
+        .hasRole("USER")
         .and()
         .formLogin();
     return http.build();
   }
-
-  // @Bean
-  // public WebSecurityCustomizer webSecurityCustomizer() {
-  //   return (web) -> web.ignoring().antMatchers("/images/**", "/js/**");
-  // }
-
-  // @Bean
-  // public UserDetailsService userDetailsService() {
-  //   UserDetails user =
-  //       User.withDefaultPasswordEncoder()
-  //           .username("user")
-  //           .password("password")
-  //           .roles("USER")
-  //           .build();
-  //   UserDetails admin =
-  //       User.withDefaultPasswordEncoder()
-  //           .username("admin")
-  //           .password("password")
-  //           .roles("ADMIN", "USER")
-  //           .build();
-  //   return new InMemoryUserDetailsManager(user, admin);
-  // }
 }

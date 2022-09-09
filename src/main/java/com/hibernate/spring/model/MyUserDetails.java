@@ -1,7 +1,9 @@
-package com.hibernate.spring.service;
+package com.hibernate.spring.model;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,30 +11,35 @@ import org.springframework.security.core.userdetails.UserDetails;
 /** MyUserDetails */
 public class MyUserDetails implements UserDetails {
   private String name;
+  private String password;
+  private boolean active;
+  private List<GrantedAuthority> authorities;
 
   public MyUserDetails() {}
 
-  public MyUserDetails(String name) {
-    this.name = name;
-  }
-
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    // TODO Auto-generated method stub
-    return Arrays.asList(
-        new SimpleGrantedAuthority("ROLE_USER"), new SimpleGrantedAuthority("ROLE_ADMIN"));
-  }
-
-  @Override
-  public String getPassword() {
-    // TODO Auto-generated method stub
-    return "password";
+  public MyUserDetails(User user) {
+    this.name = user.getName();
+    this.password = user.getPassword();
+    this.active = user.isActive();
+    this.authorities =
+        Arrays.stream(user.getRoles().split(","))
+            .map(SimpleGrantedAuthority::new)
+            .collect(Collectors.toList());
   }
 
   @Override
   public String getUsername() {
-    // TODO Auto-generated method stub
     return this.name;
+  }
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return this.authorities;
+  }
+
+  @Override
+  public String getPassword() {
+    return this.password;
   }
 
   @Override
@@ -56,6 +63,6 @@ public class MyUserDetails implements UserDetails {
   @Override
   public boolean isEnabled() {
     // TODO Auto-generated method stub
-    return true;
+    return this.active;
   }
 }
