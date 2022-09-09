@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 /** CustomerController */
 @Controller
-@RequestMapping(path = "/")
+@RequestMapping(path = "/customer")
 public class CustomerController {
   @Autowired private CustomerDao customerDao;
   // This method will pre-process each web request to controller.
@@ -28,16 +28,6 @@ public class CustomerController {
     StringTrimmerEditor stringTrimmerEditor =
         new StringTrimmerEditor(true); // true means trim data to null if it has white space
     webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
-  }
-
-  @GetMapping("/")
-  public String homePage() {
-    return "redirect:/customer-list";
-  }
-
-  @GetMapping("/admin")
-  public String adminPage() {
-    return "admin";
   }
 
   // @GetMapping({"/customer-list", "/"})
@@ -51,7 +41,7 @@ public class CustomerController {
   @GetMapping("/customer-form")
   public String customerForm(Model model) {
     model.addAttribute("customer", new Customer());
-    model.addAttribute("actionPost", new String("/web-app-demo/save-customer"));
+    model.addAttribute("actionPost", new String("/web-app-demo/customer/save-customer"));
     model.addAttribute("inputVal", new String("Add Customer"));
     return "form-customer";
   }
@@ -72,14 +62,14 @@ public class CustomerController {
   @GetMapping("/delete-customer")
   public String deleteCustomer(@RequestParam("customerId") int customerId) {
     customerDao.deleteCustomer(customerId);
-    return "redirect:/customer-list";
+    return "redirect:/customer/customer-list";
   }
 
   @GetMapping("/update-customer")
   public String updateCustomer(@RequestParam("customerId") int customerId, Model model) {
     Customer customer = customerDao.findCustomer(customerId);
     model.addAttribute("customer", customer);
-    model.addAttribute("actionPost", new String("/web-app-demo/update-customer-process"));
+    model.addAttribute("actionPost", new String("/web-app-demo/customer/update-customer-process"));
     model.addAttribute("inputVal", new String("Update Customer"));
     return "form-customer";
   }

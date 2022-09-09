@@ -33,10 +33,10 @@
 						</thead>
 						<tbody class="text-center">
 							<c:forEach var="customer" items="${customers}">
-								<c:url var="deleteLink" value="/delete-customer">
+								<c:url var="deleteLink" value="/customer/delete-customer">
 									<c:param name="customerId" value="${customer.id}"></c:param>
 								</c:url>
-								<c:url var="updateLink" value="/update-customer">
+								<c:url var="updateLink" value="/customer/update-customer">
 									<c:param name="customerId" value="${customer.id}"></c:param>
 								</c:url>
 								<tr>
@@ -55,7 +55,7 @@
 						</tbody>
 					</table>
 					<div>
-						<a href="<c:url value="/customer-form" />"><input class="btn btn-primary btn-block mt-2"
+						<a href="<c:url value="/customer/customer-form" />"><input class="btn btn-primary btn-block mt-2"
 							value="Add Customer"></input></a>
 					</div>
 				</div>
