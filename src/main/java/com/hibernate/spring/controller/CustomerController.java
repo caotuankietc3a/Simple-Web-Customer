@@ -83,7 +83,7 @@ public class CustomerController {
       BindingResult bindingResult,
       Model model) {
     if (bindingResult.hasErrors()) {
-      return "form-customer";
+      return "redirect:/form-customer";
     }
     customerDao.updateCustomer(customer);
     return "redirect:/customer-list";

@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 /** SecurityConfigure */
 @Configuration
@@ -51,7 +52,12 @@ public class SecurityConfig {
     // .antMatchers("/**")
     // .hasRole("USER")
 
-    http.authorizeRequests()
+    http.csrf()
+        .csrfTokenRepository(new CookieCsrfTokenRepository())
+        .and()
+        // http.csrf()
+        //     .disable()
+        .authorizeHttpRequests()
         .antMatchers("/admin")
         .hasRole("ADMIN")
         .antMatchers("/customer/customer-form")
