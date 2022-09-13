@@ -14,4 +14,6 @@ public interface CustomerDao {
   public void deleteCustomer(int customerId);
 
   public Customer findCustomer(int customerId);
+
+  public Customer findAndUpdateCustomer(int customerId, Customer newCustomer);
 }

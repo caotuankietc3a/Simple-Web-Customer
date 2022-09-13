@@ -47,6 +47,17 @@ public class CustomerDaoImpl implements CustomerDao {
 
   @Override
   @Transactional
+  public Customer findAndUpdateCustomer(int customerId, Customer newCustomer) {
+    Session session = sessionFactory.getCurrentSession();
+    Customer customer = session.get(Customer.class, customerId);
+    if (customer == null) return null;
+    customer.setName(newCustomer.getName());
+    customer.setEmail(newCustomer.getEmail());
+    return customer;
+  }
+
+  @Override
+  @Transactional
   public void updateCustomer(Customer customer) {
     Session session = sessionFactory.getCurrentSession();
     session.saveOrUpdate(customer);

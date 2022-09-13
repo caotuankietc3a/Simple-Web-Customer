@@ -2,12 +2,10 @@ package com.hibernate.spring.controller;
 
 import com.hibernate.spring.dao.CustomerDao;
 import com.hibernate.spring.model.Customer;
-import com.hibernate.spring.model.MyUserDetails;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,11 +31,19 @@ public class CustomerController {
   }
 
   // @GetMapping({"/customer-list", "/"})
+  // @GetMapping("/customer-list")
+  // public String customerList(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model) {
+  //   List<Customer> customers = customerDao.getCustomers();
+  //   model.addAttribute("customers", customers);
+  //   model.addAttribute("username", new String(myUserDetails.getUsername()));
+  //   return "list-customer";
+  // }
+
   @GetMapping("/customer-list")
-  public String customerList(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model) {
+  public String customerList(Model model) {
     List<Customer> customers = customerDao.getCustomers();
     model.addAttribute("customers", customers);
-    model.addAttribute("username", new String(myUserDetails.getUsername()));
+    model.addAttribute("username", new String("TEST NAME"));
     return "list-customer";
   }
 
